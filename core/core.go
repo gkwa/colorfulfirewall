@@ -66,17 +66,26 @@ func Run() {
 		case fyne.KeyU:
 			public.SetSelected("pUblic")
 			preferences[imagePaths[currentIndex]] = ImagePreference{ImagePath: imagePaths[currentIndex], Public: true}
-			savePreferences(preferences, "preferences.json")
+			if err := savePreferences(preferences, "preferences.json"); err != nil {
+				fmt.Fprintf(os.Stderr, "error saving preferences, %v\n", err)
+				os.Exit(1)
+			}
 			currentIndex = (currentIndex + 1) % len(imagePaths)
 		case fyne.KeyR:
 			public.SetSelected("pRivate")
 			preferences[imagePaths[currentIndex]] = ImagePreference{ImagePath: imagePaths[currentIndex], Public: false}
-			savePreferences(preferences, "preferences.json")
+			if err := savePreferences(preferences, "preferences.json"); err != nil {
+				fmt.Fprintf(os.Stderr, "error saving preferences, %v\n", err)
+				os.Exit(1)
+			}
 			currentIndex = (currentIndex + 1) % len(imagePaths)
 		case fyne.KeyD:
 			public.SetSelected("")
 			delete(preferences, imagePaths[currentIndex])
-			savePreferences(preferences, "preferences.json")
+			if err := savePreferences(preferences, "preferences.json"); err != nil {
+				fmt.Fprintf(os.Stderr, "error saving preferences, %v\n", err)
+				os.Exit(1)
+			}
 			currentIndex = (currentIndex + 1) % len(imagePaths)
 		case fyne.KeyN:
 			currentIndex = (currentIndex + 1) % len(imagePaths)
