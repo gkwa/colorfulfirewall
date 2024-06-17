@@ -6,9 +6,10 @@ if [ ! -f "preferences.json" ]; then
 fi
 
 total_items=$(jq '. | length' preferences.json)
-true_count=$(jq '[.[] | select(.public == true)] | length' preferences.json)
-false_count=$(jq '[.[] | select(.public == false)] | length' preferences.json)
+public_count=$(jq '[.[] | select(.public == true)] | length' preferences.json)
+private_count=$(jq '[.[] | select(.public == false)] | length' preferences.json)
 
-echo "Total items: $total_items"
-echo "Count of true: $true_count"
-echo "Count of false: $false_count"
+private=$(jq '[.[] | select(.public == false)] | .[] | .imagePath' preferences.json | xargs du -ch | tail -n 1 | awk '{print $1}')
+public=$(jq '[.[] | select(.public == true)] | .[] | .imagePath' preferences.json | xargs du -ch | tail -n 1 | awk '{print $1}')
+
+echo "$total_items images total: $private_count private ($private), $public_count public ($public)"
