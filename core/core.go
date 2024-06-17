@@ -15,7 +15,7 @@ import (
 
 type ImagePreference struct {
 	ImagePath string `json:"imagePath"`
-	Liked     bool   `json:"liked"`
+	Public    bool   `json:"public"`
 }
 
 func Run() {
@@ -31,7 +31,6 @@ func Run() {
 	preferences, _ := loadPreferences("preferences.json")
 
 	imagePaths, _ := filepath.Glob("images/*.png")
-
 	if len(imagePaths) == 0 {
 		fmt.Fprintf(os.Stderr, "./images is empty, i expect it to have 1 or morg image files\n")
 		os.Exit(0)
@@ -45,7 +44,7 @@ func Run() {
 	public := widget.NewRadioGroup([]string{"pUblic", "pRivate"}, func(string) {})
 
 	if preference, ok := preferences[imagePaths[currentIndex]]; ok {
-		if preference.Liked {
+		if preference.Public {
 			public.SetSelected("pUblic")
 		} else {
 			public.SetSelected("pRivate")
@@ -66,12 +65,12 @@ func Run() {
 		switch ev.Name {
 		case fyne.KeyU:
 			public.SetSelected("pUblic")
-			preferences[imagePaths[currentIndex]] = ImagePreference{ImagePath: imagePaths[currentIndex], Liked: true}
+			preferences[imagePaths[currentIndex]] = ImagePreference{ImagePath: imagePaths[currentIndex], Public: true}
 			savePreferences(preferences, "preferences.json")
 			currentIndex = (currentIndex + 1) % len(imagePaths)
 		case fyne.KeyR:
 			public.SetSelected("pRivate")
-			preferences[imagePaths[currentIndex]] = ImagePreference{ImagePath: imagePaths[currentIndex], Liked: false}
+			preferences[imagePaths[currentIndex]] = ImagePreference{ImagePath: imagePaths[currentIndex], Public: false}
 			savePreferences(preferences, "preferences.json")
 			currentIndex = (currentIndex + 1) % len(imagePaths)
 		case fyne.KeyD:
@@ -83,6 +82,13 @@ func Run() {
 			currentIndex = (currentIndex + 1) % len(imagePaths)
 		case fyne.KeyP:
 			currentIndex = (currentIndex - 1 + len(imagePaths)) % len(imagePaths)
+		case fyne.KeyT:
+			for i := 0; i < len(imagePaths); i++ {
+				if _, ok := preferences[imagePaths[currentIndex]]; !ok {
+					break
+				}
+				currentIndex = (currentIndex + 1) % len(imagePaths)
+			}
 		default:
 			return
 		}
@@ -91,7 +97,7 @@ func Run() {
 		img.Refresh()
 
 		if preference, ok := preferences[imagePaths[currentIndex]]; ok {
-			if preference.Liked {
+			if preference.Public {
 				public.SetSelected("pUblic")
 			} else {
 				public.SetSelected("pRivate")
