@@ -43,13 +43,7 @@ func Run() {
 	img.SetMinSize(imageSize)
 
 	public := widget.NewRadioGroup([]string{"pUblic", "pRivate"}, func(string) {})
-	if preference, ok := preferences[imagePaths[currentIndex]]; ok {
-		if preference.Public {
-			public.SetSelected("pUblic")
-		} else {
-			public.SetSelected("pRivate")
-		}
-	}
+	updatePublicSelection(preferences, imagePaths[currentIndex], public)
 
 	content := container.NewVBox(
 		img,
@@ -63,40 +57,20 @@ func Run() {
 	w.Canvas().SetOnTypedKey(func(ev *fyne.KeyEvent) {
 		switch ev.Name {
 		case fyne.KeyU:
-			public.SetSelected("pUblic")
-			preferences[imagePaths[currentIndex]] = ImagePreference{ImagePath: imagePaths[currentIndex], Public: true}
-			if err := savePreferences(preferences, "preferences.json"); err != nil {
-				fmt.Fprintf(os.Stderr, "error saving preferences, %v\n", err)
-				os.Exit(1)
-			}
+			setPreference(preferences, imagePaths[currentIndex], true, public)
 			currentIndex = (currentIndex + 1) % len(imagePaths)
 		case fyne.KeyR:
-			public.SetSelected("pRivate")
-			preferences[imagePaths[currentIndex]] = ImagePreference{ImagePath: imagePaths[currentIndex], Public: false}
-			if err := savePreferences(preferences, "preferences.json"); err != nil {
-				fmt.Fprintf(os.Stderr, "error saving preferences, %v\n", err)
-				os.Exit(1)
-			}
+			setPreference(preferences, imagePaths[currentIndex], false, public)
 			currentIndex = (currentIndex + 1) % len(imagePaths)
 		case fyne.KeyD:
-			public.SetSelected("")
-			delete(preferences, imagePaths[currentIndex])
-			if err := savePreferences(preferences, "preferences.json"); err != nil {
-				fmt.Fprintf(os.Stderr, "error saving preferences, %v\n", err)
-				os.Exit(1)
-			}
+			deletePreference(preferences, imagePaths[currentIndex], public)
 			currentIndex = (currentIndex + 1) % len(imagePaths)
 		case fyne.KeyN:
 			currentIndex = (currentIndex + 1) % len(imagePaths)
 		case fyne.KeyP:
 			currentIndex = (currentIndex - 1 + len(imagePaths)) % len(imagePaths)
 		case fyne.KeyT:
-			for i := 0; i < len(imagePaths); i++ {
-				if _, ok := preferences[imagePaths[currentIndex]]; !ok {
-					break
-				}
-				currentIndex = (currentIndex + 1) % len(imagePaths)
-			}
+			currentIndex = findNextUnmarkedImage(preferences, imagePaths, currentIndex)
 		default:
 			return
 		}
@@ -104,18 +78,54 @@ func Run() {
 		img.File = imagePaths[currentIndex]
 		img.Refresh()
 
-		if preference, ok := preferences[imagePaths[currentIndex]]; ok {
-			if preference.Public {
-				public.SetSelected("pUblic")
-			} else {
-				public.SetSelected("pRivate")
-			}
-		} else {
-			public.SetSelected("")
-		}
+		updatePublicSelection(preferences, imagePaths[currentIndex], public)
 	})
 
 	w.ShowAndRun()
+}
+
+func updatePublicSelection(preferences map[string]ImagePreference, imagePath string, public *widget.RadioGroup) {
+	if preference, ok := preferences[imagePath]; ok {
+		if preference.Public {
+			public.SetSelected("pUblic")
+		} else {
+			public.SetSelected("pRivate")
+		}
+	} else {
+		public.SetSelected("")
+	}
+}
+
+func setPreference(preferences map[string]ImagePreference, imagePath string, isPublic bool, public *widget.RadioGroup) {
+	preferences[imagePath] = ImagePreference{ImagePath: imagePath, Public: isPublic}
+	if err := savePreferences(preferences, "preferences.json"); err != nil {
+		fmt.Fprintf(os.Stderr, "error saving preferences, %v\n", err)
+		os.Exit(1)
+	}
+	if isPublic {
+		public.SetSelected("pUblic")
+	} else {
+		public.SetSelected("pRivate")
+	}
+}
+
+func deletePreference(preferences map[string]ImagePreference, imagePath string, public *widget.RadioGroup) {
+	delete(preferences, imagePath)
+	if err := savePreferences(preferences, "preferences.json"); err != nil {
+		fmt.Fprintf(os.Stderr, "error saving preferences, %v\n", err)
+		os.Exit(1)
+	}
+	public.SetSelected("")
+}
+
+func findNextUnmarkedImage(preferences map[string]ImagePreference, imagePaths []string, currentIndex int) int {
+	for i := 0; i < len(imagePaths); i++ {
+		if _, ok := preferences[imagePaths[currentIndex]]; !ok {
+			break
+		}
+		currentIndex = (currentIndex + 1) % len(imagePaths)
+	}
+	return currentIndex
 }
 
 func groupImages(imagePaths []string, preferences map[string]ImagePreference) []string {
