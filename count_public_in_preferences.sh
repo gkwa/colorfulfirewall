@@ -1,8 +1,8 @@
 #!/bin/bash
 
 if [ ! -f "preferences.json" ]; then
-   echo "preferences.json file not found."
-   exit 1
+    echo "preferences.json file not found."
+    exit 1
 fi
 
 total_items=$(jq '. | length' preferences.json)
