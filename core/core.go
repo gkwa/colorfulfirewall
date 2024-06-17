@@ -24,17 +24,18 @@ func Run() {
 
 	imageSize := fyne.NewSize(3*2*96, 3*2*96)
 	windowSize := fyne.NewSize(imageSize.Width, imageSize.Height+50)
-
 	w.Resize(windowSize)
 	w.SetFixedSize(true)
 
 	preferences, _ := loadPreferences("preferences.json")
-
 	imagePaths, _ := filepath.Glob("images/*.png")
 	if len(imagePaths) == 0 {
-		fmt.Fprintf(os.Stderr, "./images is empty, i expect it to have 1 or morg image files\n")
+		fmt.Fprintf(os.Stderr, "./images is empty, i expect it to have 1 or more image files\n")
 		os.Exit(0)
 	}
+
+	// show marked files first
+	imagePaths = groupImages(imagePaths, preferences)
 
 	currentIndex := 0
 	img := canvas.NewImageFromFile(imagePaths[currentIndex])
@@ -42,7 +43,6 @@ func Run() {
 	img.SetMinSize(imageSize)
 
 	public := widget.NewRadioGroup([]string{"pUblic", "pRivate"}, func(string) {})
-
 	if preference, ok := preferences[imagePaths[currentIndex]]; ok {
 		if preference.Public {
 			public.SetSelected("pUblic")
@@ -58,7 +58,6 @@ func Run() {
 			public,
 		),
 	)
-
 	w.SetContent(container.NewCenter(content))
 
 	w.Canvas().SetOnTypedKey(func(ev *fyne.KeyEvent) {
@@ -117,6 +116,20 @@ func Run() {
 	})
 
 	w.ShowAndRun()
+}
+
+func groupImages(imagePaths []string, preferences map[string]ImagePreference) []string {
+	var preferredImages, unpreferredImages []string
+
+	for _, imagePath := range imagePaths {
+		if _, ok := preferences[imagePath]; ok {
+			preferredImages = append(preferredImages, imagePath)
+		} else {
+			unpreferredImages = append(unpreferredImages, imagePath)
+		}
+	}
+
+	return append(preferredImages, unpreferredImages...)
 }
 
 func loadPreferences(filename string) (map[string]ImagePreference, error) {
