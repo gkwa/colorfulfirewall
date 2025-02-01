@@ -3,7 +3,7 @@ module github.com/gkwa/colorfulfirewall
 go 1.22.4
 
 require (
-	fyne.io/fyne/v2 v2.5.3
+	fyne.io/fyne/v2 v2.5.4
 	github.com/go-git/go-git/v5 v5.13.2
 	github.com/magefile/mage v1.15.0
 	github.com/spf13/cobra v1.8.1
@@ -43,6 +43,7 @@ require (
 	github.com/kevinburke/ssh_config v1.2.0 // indirect
 	github.com/magiconair/properties v1.8.7 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
+	github.com/nfnt/resize v0.0.0-20180221191011-83c6a9932646 // indirect
 	github.com/nicksnyder/go-i18n/v2 v2.4.0 // indirect
 	github.com/pelletier/go-toml/v2 v2.2.2 // indirect
 	github.com/pjbgf/sha1cd v0.3.2 // indirect
