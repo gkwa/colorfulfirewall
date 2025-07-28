@@ -5,7 +5,7 @@ go 1.23.0
 toolchain go1.24.5
 
 require (
-	fyne.io/fyne/v2 v2.6.1
+	fyne.io/fyne/v2 v2.6.2
 	github.com/go-git/go-git/v5 v5.16.2
 	github.com/magefile/mage v1.15.0
 	github.com/spf13/cobra v1.9.1
@@ -24,9 +24,9 @@ require (
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
 	github.com/emirpasic/gods v1.18.1 // indirect
 	github.com/fredbi/uri v1.1.0 // indirect
-	github.com/fsnotify/fsnotify v1.8.0 // indirect
-	github.com/fyne-io/gl-js v0.1.0 // indirect
-	github.com/fyne-io/glfw-js v0.2.0 // indirect
+	github.com/fsnotify/fsnotify v1.9.0 // indirect
+	github.com/fyne-io/gl-js v0.2.0 // indirect
+	github.com/fyne-io/glfw-js v0.3.0 // indirect
 	github.com/fyne-io/image v0.1.1 // indirect
 	github.com/fyne-io/oksvg v0.1.0 // indirect
 	github.com/go-git/gcfg v1.5.1-0.20230307220236-3a3c6141e376 // indirect
@@ -44,7 +44,7 @@ require (
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/jbenet/go-context v0.0.0-20150711004518-d14ea06fba99 // indirect
-	github.com/jeandeaual/go-locale v0.0.0-20241217141322-fcc2cadd6f08 // indirect
+	github.com/jeandeaual/go-locale v0.0.0-20250612000132-0ef82f21eade // indirect
 	github.com/jsummers/gobmp v0.0.0-20230614200233-a9de23ed2e25 // indirect
 	github.com/kevinburke/ssh_config v1.2.0 // indirect
 	github.com/magiconair/properties v1.8.7 // indirect
