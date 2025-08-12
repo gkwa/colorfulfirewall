@@ -2,7 +2,7 @@ module github.com/gkwa/colorfulfirewall
 
 go 1.23.0
 
-toolchain go1.24.6
+toolchain go1.25.0
 
 require (
 	fyne.io/fyne/v2 v2.6.2
