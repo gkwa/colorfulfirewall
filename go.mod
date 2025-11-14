@@ -5,7 +5,7 @@ go 1.23.0
 toolchain go1.25.4
 
 require (
-	fyne.io/fyne/v2 v2.7.0
+	fyne.io/fyne/v2 v2.7.1
 	github.com/go-git/go-git/v5 v5.16.3
 	github.com/magefile/mage v1.15.0
 	github.com/spf13/cobra v1.10.1
