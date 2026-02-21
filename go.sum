@@ -63,6 +63,8 @@ fyne.io/fyne/v2 v2.7.1 h1:ja7rNHWWEooha4XBIZNnPP8tVFwmTfwMJdpZmLxm2Zc=
 fyne.io/fyne/v2 v2.7.1/go.mod h1:xClVlrhxl7D+LT+BWYmcrW4Nf+dJTvkhnPgji7spAwE=
 fyne.io/fyne/v2 v2.7.2 h1:XiNpWkn0PzX43ZCjbb0QYGg1RCxVbugwfVgikWZBCMw=
 fyne.io/fyne/v2 v2.7.2/go.mod h1:PXbqY3mQmJV3J1NRUR2VbVgUUx3vgvhuFJxyjRK/4Ug=
+fyne.io/fyne/v2 v2.7.3 h1:xBT/iYbdnNHONWO38fZMBrVBiJG8rV/Jypmy4tVfRWE=
+fyne.io/fyne/v2 v2.7.3/go.mod h1:gu+dlIcZWSzKZmnrY8Fbnj2Hirabv2ek+AKsfQ2bBlw=
 fyne.io/systray v1.10.1-0.20231115130155-104f5ef7839e h1:Hvs+kW2VwCzNToF3FmnIAzmivNgrclwPgoUdVSrjkP8=
 fyne.io/systray v1.10.1-0.20231115130155-104f5ef7839e/go.mod h1:oM2AQqGJ1AMo4nNqZFYU8xYygSBZkW2hmdJ7n4yjedE=
 fyne.io/systray v1.11.0 h1:D9HISlxSkx+jHSniMBR6fCFOUjk1x/OOOJLa9lJYAKg=
@@ -245,6 +247,8 @@ github.com/go-text/typesetting v0.2.0 h1:fbzsgbmk04KiWtE+c3ZD4W2nmCRzBqrqQOvYlwA
 github.com/go-text/typesetting v0.2.0/go.mod h1:2+owI/sxa73XA581LAzVuEBZ3WEEV2pXeDswCH/3i1I=
 github.com/go-text/typesetting v0.2.1 h1:x0jMOGyO3d1qFAPI0j4GSsh7M0Q3Ypjzr4+CEVg82V8=
 github.com/go-text/typesetting v0.2.1/go.mod h1:mTOxEwasOFpAMBjEQDhdWRckoLLeI/+qrQeBCTGEt6M=
+github.com/go-text/typesetting v0.3.3 h1:ihGNJU9KzdK2QRDy1Bm7FT5RFQoYb+3n3EIhI/4eaQc=
+github.com/go-text/typesetting v0.3.3/go.mod h1:vIRUT25mLQaSh4C8H/lIsKppQz/Gdb8Pu/tNwpi52ts=
 github.com/go-text/typesetting-utils v0.0.0-20240329101916-eee87fb235a3 h1:levTnuLLUmpavLGbJYLJA7fQnKeS7P1eCdAlM+vReXk=
 github.com/go-text/typesetting-utils v0.0.0-20240329101916-eee87fb235a3/go.mod h1:DDxDdQEnB70R8owOx3LVpEFvpMK9eeH1o2r0yZhFI9o=
 github.com/go-viper/mapstructure/v2 v2.2.1 h1:ZAaOCxANMuZx5RCeg0mBdEZk7DZasvvZIxtHqx8aGss=
